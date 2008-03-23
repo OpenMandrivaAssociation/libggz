@@ -1,5 +1,5 @@
 %define version 0.0.14.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 2
 %define libname %mklibname ggz %{major}
@@ -17,7 +17,7 @@ Summary:	Common library for the GGZ Gaming Zone
 Version:	%{version}
 Release:	%{release}
 License:	GPL
-Group:		Games/Other
+Group:		System/Libraries
 URL:		http://ggzgamingzone.org/
 Source0:	http://ftp.ggzgamingzone.org/pub/ggz/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -56,7 +56,7 @@ required for running both clients and the server.
 
 %package	-n %{libname}-devel
 Summary:	Development files used to build GGZ Gaming Zone applications
-Group:		Development/Other
+Group:		Development/C
 Provides:	%{name}-devel = %{version}
 Requires:	%{libname} = %{version}
 
@@ -98,7 +98,8 @@ rm -rf %{buildroot}
 %files -n %{libname}
 %defattr(-,root,root)
 %doc AUTHORS COPYING NEWS README README.GGZ QuickStart.GGZ
-%{_libdir}/libggz.so.*
+%{_libdir}/libggz.so.%{major}
+%{_libdir}/libggz.so.%{major}.*
 %{_mandir}/man?/*
 
 
