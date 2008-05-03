@@ -1,8 +1,9 @@
 %define version 0.0.14.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major 2
 %define libname %mklibname ggz %{major}
+%define develname %mklibname -d ggz
 
 # Enable encryption support?
 %define enable_encrypt 0
@@ -54,13 +55,14 @@ This package contains the shared library that provides features
 required for running both clients and the server.
 
 
-%package	-n %{libname}-devel
+%package	-n %{develname}
 Summary:	Development files used to build GGZ Gaming Zone applications
 Group:		Development/C
 Provides:	%{name}-devel = %{version}
 Requires:	%{libname} = %{version}
+Obsoletes:	%mklibname -d ggz 2
 
-%description	-n %{libname}-devel
+%description	-n %{develname}
 The GGZ Gaming Zone server allows other computers to connect to yours
 via the Internet and play network games. 
 
@@ -71,7 +73,7 @@ and the server.
 %setup -q
 
 %build
-%configure \
+%configure2_5x \
 %{?_enable_debug_packages: " --enable-debug --enable-debug-gdb --enable-debug-mem"} \
 %{!?_enable_debug_packages: " --enable-noregistry"} \
 %if %enable_encrypt
@@ -98,17 +100,13 @@ rm -rf %{buildroot}
 %files -n %{libname}
 %defattr(-,root,root)
 %doc AUTHORS COPYING NEWS README README.GGZ QuickStart.GGZ
-%{_libdir}/libggz.so.%{major}
-%{_libdir}/libggz.so.%{major}.*
+%{_libdir}/libggz.so.%{major}*
 %{_mandir}/man?/*
 
-
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc COPYING ChangeLog
 %{_includedir}/*
 %{_libdir}/libggz.a
 %{_libdir}/libggz.la
 %{_libdir}/libggz.so
-
-
