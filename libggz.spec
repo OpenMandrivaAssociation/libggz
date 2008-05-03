@@ -74,8 +74,6 @@ and the server.
 
 %build
 %configure2_5x \
-%{?_enable_debug_packages: " --enable-debug --enable-debug-gdb --enable-debug-mem"} \
-%{!?_enable_debug_packages: " --enable-noregistry"} \
 %if %enable_encrypt
 	--with-gcrypt=yes	\
 %if %use_openssl
