@@ -1,5 +1,5 @@
 %define version 0.0.14.1
-%define release %mkrel 4
+%define release %mkrel 5
 
 %define major 2
 %define libname %mklibname ggz %{major}
