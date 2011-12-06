@@ -1,6 +1,3 @@
-%define version 0.0.14.1
-%define release %mkrel 8
-
 %define major 2
 %define libname %mklibname ggz %{major}
 %define develname %mklibname -d ggz
@@ -15,13 +12,12 @@
 
 Name:		libggz
 Summary:	Common library for the GGZ Gaming Zone
-Version:	%{version}
-Release:	%{release}
+Version:	0.0.14.1
+Release:	9
 License:	GPL
 Group:		System/Libraries
 URL:		http://ggzgamingzone.org/
 Source0:	http://ftp.ggzgamingzone.org/pub/ggz/%{version}/%{name}-%{version}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %enable_encrypt
 %if %use_openssl
@@ -41,7 +37,6 @@ Build Option:
 --with openssl      Prefer OpenSSL to GNUTLS, for encryption support
                     (Useless unless "--with encrypt" is also used)
 
-
 %package	-n %{libname}
 Summary:	Common library for running GGZ Gaming Zone applications
 Group:		Games/Other
@@ -54,12 +49,11 @@ via the Internet and play network games.
 This package contains the shared library that provides features
 required for running both clients and the server.
 
-
 %package	-n %{develname}
 Summary:	Development files used to build GGZ Gaming Zone applications
 Group:		Development/C
-Provides:	%{name}-devel = %{version}
-Requires:	%{libname} = %{version}
+Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 Obsoletes:	%mklibname -d ggz 2
 
 %description	-n %{develname}
@@ -74,6 +68,7 @@ and the server.
 
 %build
 %configure2_5x \
+	--disable-static \
 %if %enable_encrypt
 	--with-gcrypt=yes	\
 %if %use_openssl
@@ -88,27 +83,15 @@ and the server.
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
+find %{buildroot} -name *.la | xargs rm
 
 %files -n %{libname}
-%defattr(-,root,root)
 %doc AUTHORS COPYING NEWS README README.GGZ QuickStart.GGZ
 %{_libdir}/libggz.so.%{major}*
 %{_mandir}/man?/*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc COPYING ChangeLog
 %{_includedir}/*
-%{_libdir}/libggz.a
-%{_libdir}/libggz.la
 %{_libdir}/libggz.so
+
