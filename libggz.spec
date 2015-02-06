@@ -13,7 +13,7 @@
 Summary:	Common library for the GGZ Gaming Zone
 Name:		libggz
 Version:	0.0.14.1
-Release:	14
+Release:	15
 License:	GPLv2
 Group:		System/Libraries
 Url:		http://ggzgamingzone.org/
